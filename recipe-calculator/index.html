@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recipe Calculator</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                50: "#fef7ee",
+                100: "#fdedd3",
+                500: "#f97316",
+                600: "#ea580c",
+                700: "#c2410c",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-50 min-h-screen">
+    <div class="min-h-screen w-full flex flex-col juustify-between">
+      <!-- Header -->
+      <header class="bg-white shadow-sm border-b">
+        <div class="max-w-4xl mx-auto px-4 py-6">
+          <h1 class="text-3xl font-bold text-gray-900 text-center">
+            <i class="fas fa-calculator text-primary-500 mr-2"></i>
+            Recipe Calculator
+          </h1>
+          <p class="text-gray-600 text-center mt-2">
+            Scale your favorite recipes to any size
+          </p>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="w-full max-w-4xl mx-auto px-4 py-8 flex-1">
+        <!-- Recipe Selection -->
+        <div class="bg-white rounded-xl shadow-sm border p-6 mb-8">
+          <h2 class="text-xl font-semibold text-gray-900 mb-4">
+            <i class="fas fa-utensils text-primary-500 mr-2"></i>
+            Select Recipe
+          </h2>
+          <select
+            id="recipeSelect"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+          >
+            <option value="">Choose a recipe...</option>
+            <option value="milk-chinchin">Milk Chinchin</option>
+          </select>
+        </div>
+
+        <!-- Recipe Details -->
+        <div id="recipeDetails" class="hidden">
+          <!-- Base Recipe Info -->
+          <div class="bg-white rounded-xl shadow-sm border p-6 mb-8">
+            <h3 class="text-xl font-semibold text-gray-900 mb-4">
+              <i class="fas fa-info-circle text-primary-500 mr-2"></i>
+              Base Recipe
+            </h3>
+            <div
+              id="baseRecipe"
+              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+            ></div>
+          </div>
+
+          <!-- Calculator -->
+          <div class="bg-white rounded-xl shadow-sm border p-6 mb-8">
+            <h3 class="text-xl font-semibold text-gray-900 mb-4">
+              <i class="fas fa-balance-scale text-primary-500 mr-2"></i>
+              Scale Recipe
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                  Select Base Ingredient
+                </label>
+                <select
+                  id="baseIngredient"
+                  class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                ></select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                  Desired Amount
+                </label>
+                <div class="flex gap-2">
+                  <input
+                    type="number"
+                    id="desiredAmount"
+                    placeholder="Enter amount"
+                    class="flex-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                    step="0.01"
+                    min="0"
+                  />
+                  <select
+                    id="desiredUnit"
+                    class="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                  ></select>
+                </div>
+              </div>
+            </div>
+            <button
+              id="calculateBtn"
+              class="w-full mt-6 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors cursor-pointer"
+            >
+              <i class="fas fa-calculator mr-2"></i>
+              Calculate Recipe
+            </button>
+          </div>
+
+          <!-- Results -->
+          <div
+            id="results"
+            class="hidden bg-white rounded-xl shadow-sm border p-6"
+          >
+            <h3 class="text-xl font-semibold text-gray-900 mb-4">
+              <i class="fas fa-list-check text-primary-500 mr-2"></i>
+              Scaled Recipe
+            </h3>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >Display Units</label
+              >
+              <select
+                id="displayUnit"
+                class="p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              >
+                <option value="metric">Metric (g, kg, ml, l)</option>
+                <option value="imperial">
+                  Imperial (oz, lb, cups, tbsp, tsp)
+                </option>
+                <option value="mixed">Mixed Units</option>
+              </select>
+            </div>
+            <div
+              id="scaledRecipe"
+              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+            ></div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="bg-white border-t mt-16">
+        <div class="max-w-4xl mx-auto px-4 py-6 text-center text-gray-600">
+          <p>
+            &copy; <span id="year"></span> Recipe Calculator. Built with ❤️ for
+            VilleDishes.
+          </p>
+        </div>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
